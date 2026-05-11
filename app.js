@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // Script for current year in footer
+    // Script for the current year in footer
     document.getElementById("current-year").textContent = new Date().getFullYear();
 
-    // Injects employee list into main
+    // Injects the employee list into main
     const main = document.getElementById("main");
     main.innerHTML = "";
 
