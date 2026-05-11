@@ -31,5 +31,4 @@ document.addEventListener("DOMContentLoaded", () => {
         section.appendChild(ul);
         main.appendChild(section);
     });
-
 });
