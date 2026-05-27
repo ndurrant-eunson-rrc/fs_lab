@@ -1,7 +1,7 @@
 import Header from "./Header";
 import Footer from "./Footer";
 import Main from "./Main";
-import Form from "./form/form";
+import Form from "./forms/Form";
 import type { Department } from "./types";
 
 interface Props {
