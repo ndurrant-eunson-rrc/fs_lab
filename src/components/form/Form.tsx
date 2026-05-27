@@ -13,7 +13,7 @@ export default function Form({ departments, setDepartments }: Props) {
 	const [selectedDept, setSelectedDept] = useState("");
 	const [errors, setErrors] = useState({ firstName: "", department: "" });
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setErrors({ firstName: "", department: "" });
 
@@ -57,7 +57,7 @@ export default function Form({ departments, setDepartments }: Props) {
 				<div className="form-group">
 					<label htmlFor="department">Department</label>
 					<select id="department" value={selectedDept} onChange={(e) => setSelectedDept(e.target.value)}>
-						<option value="">-- Select a Department --</option>
+						<option value="">Select a Department</option>
 						{departments.map((dept, index) => (
 							<option key={index} value={dept.name}>{dept.name}</option>
 						))}
