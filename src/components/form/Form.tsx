@@ -4,7 +4,7 @@ import "./form.css";
 
 interface Props {
 	departments: Department[];
-	setDepartments: React.Dispatch<React.SetStateAction<Department[]>>;
+	setDepartments: (departments: Department[]) => void;
 }
 
 export default function Form({ departments, setDepartments }: Props) {
@@ -30,8 +30,8 @@ export default function Form({ departments, setDepartments }: Props) {
 
 		const newEmployee: Employee = { firstName: firstName.trim(), lastName: lastName.trim() || undefined };
 
-		setDepartments((prev) =>
-			prev.map((dept) =>
+		setDepartments(
+			departments.map((dept) =>
 				dept.name === selectedDept ? { ...dept, employees: [...dept.employees, newEmployee] } : dept
 			)
 		);
