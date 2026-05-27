@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Department, Employee } from "../types";
-import "./Form.css";
+import "./form.css";
 
 interface Props {
 	departments: Department[];
