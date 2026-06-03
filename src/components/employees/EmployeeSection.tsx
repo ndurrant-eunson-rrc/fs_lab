@@ -15,4 +15,3 @@ export default function Employees({ departments, setDepartments }: Props) {
     </>
   );
 }
- 
