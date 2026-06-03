@@ -1,0 +1,23 @@
+nav {
+  background-color: #1C75BC;
+  display: flex;
+  gap: 10px;
+  padding: 10px 20px;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.95rem;
+  padding: 6px 14px;
+  border-radius: 4px;
+}
+
+nav a:hover {
+  background-color: #2B3990;
+}
+
+nav a.active {
+  background-color: #2B3990;
+  font-weight: bold;
+}
