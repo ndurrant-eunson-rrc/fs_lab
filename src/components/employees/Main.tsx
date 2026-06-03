@@ -1,4 +1,4 @@
-import type { Department } from "./types";
+import type { Department } from "../../data/types";
 import DepartmentSection from "./DepartmentSection";
 
 interface Props {

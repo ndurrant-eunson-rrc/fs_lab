@@ -85,3 +85,26 @@ footer {
     padding: 15px;
     font-size: 0.85rem;
 }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+ 
+th {
+  background-color: #1C75BC;
+  color: #fff;
+  text-align: left;
+  padding: 8px 12px;
+}
+ 
+td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #eee;
+}
+ 
+tr:last-child td {
+  border-bottom: none;
+}

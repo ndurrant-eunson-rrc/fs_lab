@@ -1,4 +1,4 @@
-import type { Department, Employee } from "./types";
+import type { Department, Employee } from "../../data/types";
 
 interface Props {
     department: Department;
