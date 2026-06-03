@@ -1,5 +1,5 @@
 import type { Role } from "../../data/types";
-import orgData from "../../data/organization-data";
+import organizationData from "../../data/organization-data";
  
 export default function Organization() {
   return (
@@ -12,7 +12,7 @@ export default function Organization() {
           </tr>
         </thead>
         <tbody>
-          {orgData.map((person: Role, index: number) => (
+          {organizationData.map((person: Role, index: number) => (
             <tr key={index}>
               <td>{person.firstName} {person.lastName}</td>
               <td>{person.role}</td>

@@ -1,6 +1,6 @@
 import type { Role } from "./types";
 
-const orgData: Role[] = [
+const organizationData: Role[] = [
     { firstName: "Jo-Anne", lastName: "Sinclair", role: "CEO/Chair of Board" },
     { firstName: "Jackson", lastName: "Smith", role: "COO/VP Operations" },
     { firstName: "Susan", lastName: "Thomas", role: "CFO/VP Administration" },
@@ -40,4 +40,4 @@ const orgData: Role[] = [
     { firstName: "Jim", lastName: "Wingnut", role: "Manager IT, project management office" },
 ];
 
-export default orgData;
+export default organizationData;
