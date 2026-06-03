@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Department, Employee } from "../types";
+import type { Department, Employee } from "../../data/types";
 import "./form.css";
 
 interface Props {

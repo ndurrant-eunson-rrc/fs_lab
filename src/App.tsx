@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Page from "./components/Page";
-import type { Department } from "./components/types";
-import initialDepartments from "./components/department-data";
+import Page from "./components/layout/Page";
+import type { Department } from "./data/types";
+import initialDepartments from "./data/department-data";
 import "./App.css";
  
 function App() {
