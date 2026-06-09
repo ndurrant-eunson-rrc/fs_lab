@@ -4,11 +4,11 @@ import Page from "./components/layout/Page";
 import Employees from "./components/employees/EmployeeSection";
 import Organization from "./components/organization/OrganizationSection";
 import type { Department } from "./data/types";
-import initialDepartments from "./data/department-data";
+import * as employeeRepo from "./apis/employeeRepo";
 import "./App.css";
  
 function App() {
-  const [departments, setDepartments] = useState<Department[]>(initialDepartments);
+  const [departments, setDepartments] = useState<Department[]>(employeeRepo.getDepartments());
  
   return (
     <BrowserRouter>

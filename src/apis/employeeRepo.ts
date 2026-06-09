@@ -20,5 +20,5 @@ export function createEmployee(firstName: string, lastName: string | undefined, 
         employees: [...departments[foundDeptIndex].employees, newEmployee],
     };
 
-    return departments;
+    return [...departments];
 }
