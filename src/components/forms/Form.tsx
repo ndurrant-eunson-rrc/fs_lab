@@ -1,7 +1,7 @@
 import type { Department } from "../../data/types";
 import { useFormInput } from "../../hooks/useFormInput";
 import * as EmployeeService from "../../services/employeeService";
-import "./Form.css";
+import "./form.css";
 
 interface Props {
 	departments: Department[];
