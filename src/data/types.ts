@@ -13,3 +13,9 @@ export interface Role {
   lastName: string;
   role: string;
 }
+
+export interface Role {
+  firstName: string;
+  lastName: string;
+  role: string;
+}
