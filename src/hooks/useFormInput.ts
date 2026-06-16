@@ -5,6 +5,7 @@ export function useFormInput(initialValue: string = ""): {
     message: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
     validate: (callback: (value: string) => string) => boolean;
+    setMessage: (message: string) => void;
     reset: () => void;
 } {
     const [value, setValue] = useState<string>(initialValue);
@@ -25,5 +26,5 @@ export function useFormInput(initialValue: string = ""): {
         setMessage("");
     };
 
-    return { value, message, onChange, validate, reset };
+    return { value, message, onChange, validate, setMessage, reset };
 }

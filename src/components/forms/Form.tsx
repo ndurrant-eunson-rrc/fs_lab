@@ -1,41 +1,12 @@
-import type { Department } from "../../data/types";
-import { useFormInput } from "../../hooks/useFormInput";
-import * as EmployeeService from "../../services/employeeService";
+import { useEmployeeForm } from "../../hooks/useEmployeeForm";
 import "./form.css";
 
 interface Props {
-	departments: Department[];
-	setDepartments: (departments: Department[]) => void;
+	employeeForm: ReturnType<typeof useEmployeeForm>;
 }
 
-export default function Form({ departments, setDepartments }: Props) {
-	const firstName = useFormInput("");
-	const lastName = useFormInput("");
-	const department = useFormInput("");
-
-	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault();
-
-		const firstNameValid = firstName.validate(
-			(value) => value.trim().length < 3 ? "First name must be at least 3 characters." : ""
-		);
-
-		const deptValid = department.validate(
-			(value) => !value ? "Please select a department." : ""
-		);
-
-		if (!firstNameValid || !deptValid) return;
-
-		try {
-			const updated = EmployeeService.createEmployee(firstName.value, lastName.value, department.value);
-			setDepartments(updated);
-			firstName.reset();
-			lastName.reset();
-			department.reset();
-		} catch (error) {
-			console.error(error);
-		}
-	};
+export default function Form({ employeeForm }: Props) {
+	const { firstName, lastName, department, departments, handleSubmit } = employeeForm;
 
 	return (
 		<section className= "form-section" >

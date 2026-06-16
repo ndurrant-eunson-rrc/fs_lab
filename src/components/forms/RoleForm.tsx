@@ -1,42 +1,12 @@
-import type { Role } from "../../data/types";
-import { useFormInput } from "../../hooks/useFormInput";
-import * as RoleService from "../../services/roleService";
+import { useRoleForm } from "../../hooks/useRoleForm";
 import "./form.css";
 
 interface Props {
-	setRoles: (roles: Role[]) => void;
+	roleForm: ReturnType<typeof useRoleForm>;
 }
 
-export default function RoleForm({ setRoles }: Props) {
-	const firstName = useFormInput("");
-	const lastName = useFormInput("");
-	const role = useFormInput("");
-
-	const handleSubmit = (e: React.SubmitEvent) => {
-		e.preventDefault();
-
-		const firstNameValid = firstName.validate(
-			(value) => value.trim().length < 3 ? "First name must be at least 3 characters." : ""
-		);
-
-		const roleValid = role.validate(
-			(value) => !value.trim() ? "Please enter a role." : ""
-		);
-
-		if (!firstNameValid || !roleValid) return;
-
-		try {
-			const updated = RoleService.createRole(firstName.value, lastName.value, role.value);
-			setRoles(updated);
-			firstName.reset();
-			lastName.reset();
-			role.reset();
-		} catch (error) {
-			if (error instanceof Error) {
-				role.validate(() => error.message);
-			}
-		}
-	};
+export default function RoleForm({ roleForm }: Props) {
+	const { firstName, lastName, role, handleSubmit } = roleForm;
 
 	return (
 		<section className="form-section">
