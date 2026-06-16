@@ -1,7 +1,7 @@
 import type { Role } from "../../data/types";
 import { useFormInput } from "../../hooks/useFormInput";
 import * as RoleService from "../../services/roleService";
-import "./Form.css";
+import "./form.css";
 
 interface Props {
 	setRoles: (roles: Role[]) => void;
