@@ -9,13 +9,13 @@ export interface Department {
 }
 
 export interface Role {
-  firstName: string;
-  lastName: string;
-  role: string;
+    firstName: string;
+    lastName: string;
+    role: string;
 }
 
 export interface Role {
-  firstName: string;
-  lastName: string;
-  role: string;
+    firstName: string;
+    lastName: string;
+    role: string;
 }
