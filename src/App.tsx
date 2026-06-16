@@ -9,19 +9,19 @@ import * as RoleService from "./services/roleService";
 import "./App.css";
 
 function App() {
-  const [departments, setDepartments] = useState<Department[]>(EmployeeService.getDepartments());
-  const [roles, setRoles] = useState<Role[]>(RoleService.getRoles());
+    const [departments, setDepartments] = useState<Department[]>(EmployeeService.getDepartments());
+    const [roles, setRoles] = useState<Role[]>(RoleService.getRoles());
 
-  return (
-    <BrowserRouter>
-    <Routes>
-    <Route path= "/" element = {< Page />}>
-      <Route index element = {< Navigate to = "/employees" />} />
-        < Route path = "employees" element = {< Employees departments = { departments } setDepartments = { setDepartments } />} />
-          < Route path = "organization" element = {< Organization roles = { roles } setRoles = { setRoles } />} />
-            </Route>
-            </Routes>
-            </BrowserRouter>
+    return (
+        <BrowserRouter>
+        <Routes>
+        <Route path= "/" element = {< Page />}>
+            <Route index element = {< Navigate to = "/employees" />} />
+                < Route path = "employees" element = {< Employees departments = { departments } setDepartments = { setDepartments } />} />
+                    < Route path = "organization" element = {< Organization roles = { roles } setRoles = { setRoles } />} />
+                        </Route>
+                        </Routes>
+                        </BrowserRouter>
   );
 }
 
