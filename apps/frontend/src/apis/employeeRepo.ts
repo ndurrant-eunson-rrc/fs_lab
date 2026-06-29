@@ -1,24 +1,22 @@
-import type { Department, Employee } from "../data/types";
-import initialDepartments from "../data/department-data";
+import { Department } from "../data/types";
 
-const departments: Department[] = [...initialDepartments];
-
-export function getDepartments(): Department[] {
-    return departments;
+const BASE_URL = "http://localhost:3000/api/v1/employees";
+ 
+export async function getDepartments(): Promise<Department[]> {
+    const response = await fetch(BASE_URL);
+    if (!response.ok) throw new Error("Failed to fetch departments.");
+    return response.json();
 }
-
-export function createEmployee(firstName: string, lastName: string | undefined, deptName: string): Department[] {
-    const newEmployee: Employee = { firstName, lastName };
-
-    const foundDeptIndex = departments.findIndex((dept) => dept.name === deptName);
-    if (foundDeptIndex === -1) {
-        throw new Error();
+ 
+export async function createEmployee(firstName: string, lastName: string | undefined, deptName: string): Promise<Department[]> {
+    const response = await fetch(BASE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ firstName, lastName, deptName }),
+    });
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
     }
-
-    departments[foundDeptIndex] = {
-        ...departments[foundDeptIndex],
-        employees: [...departments[foundDeptIndex].employees, newEmployee],
-    };
-
-    return [...departments];
+    return response.json();
 }

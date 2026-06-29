@@ -1,14 +1,20 @@
-import * as RoleRepo from "../apis/roleRepo";
-import type { Role } from "../data/types";
-
+import { Role } from "../data/types";
+import { validateFirstName } from "./employeeService";
+import organizationData from "../data/organization-data";
+ 
 export function getRoles(): Role[] {
-	return RoleRepo.getRoles();
+    return [...organizationData];
 }
-
+ 
 export function createRole(firstName: string, lastName: string, role: string): Role[] {
-	if (firstName.trim().length < 3) {
-		throw new Error("First name must be at least 3 characters.");
-	}
-
-	return RoleRepo.createRole(firstName.trim(), lastName.trim(), role.trim());
+    const firstNameError = validateFirstName(firstName);
+    if (firstNameError) throw new Error(firstNameError);
+ 
+    if (!role.trim()) throw new Error("Please enter a role.");
+ 
+    const foundRole = organizationData.find((r) => r.role === role);
+    if (foundRole) throw new Error(`The role "${role}" is already occupied.`);
+ 
+    organizationData.push({ firstName: firstName.trim(), lastName: lastName.trim(), role: role.trim() });
+    return [...organizationData];
 }
