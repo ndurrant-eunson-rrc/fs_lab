@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import * as EmployeeService from "../../../services/employeeService";
+import * as EmployeeService from "../services/employeeService";
 
 export function getDepartments(req: Request, res: Response): void {
   try {

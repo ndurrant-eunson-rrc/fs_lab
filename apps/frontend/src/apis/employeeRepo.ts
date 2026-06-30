@@ -1,4 +1,4 @@
-import { Department } from "../data/types";
+import type { Department } from "../data/types";
 
 const BASE_URL = "http://localhost:3000/api/v1/employees";
  

@@ -1,4 +1,4 @@
-import { Role } from "../data/types";
+import type { Role } from "../data/types";
 
 const BASE_URL = "http://localhost:3000/api/v1/roles";
  

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import * as RoleService from "../../services/roleService";
+import * as RoleService from "../services/roleService";
  
 export function getRoles(req: Request, res: Response): void {
   try {

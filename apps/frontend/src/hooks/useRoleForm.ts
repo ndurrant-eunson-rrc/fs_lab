@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Role } from "../data/types";
 import { useFormInput } from "./useFormInput";
 import * as RoleService from "../services/roleService";
@@ -10,10 +10,16 @@ export function useRoleForm(): {
     roles: Role[];
     handleSubmit: (e: React.SubmitEvent) => void;
 } {
-    const [roles, setRoles] = useState<Role[]>(RoleService.getRoles());
+    const [roles, setRoles] = useState<Role[]>([]);
     const firstName = useFormInput("");
     const lastName = useFormInput("");
     const role = useFormInput("");
+
+    useEffect(() => {
+        RoleService.getRoles()
+            .then(setRoles)
+            .catch((error) => console.error(error));
+    }, []);
 
     const handleSubmit = (e: React.SubmitEvent) => {
         e.preventDefault();
@@ -28,17 +34,18 @@ export function useRoleForm(): {
 
         if (!firstNameValid || !roleValid) return;
 
-        try {
-            const updated = RoleService.createRole(firstName.value, lastName.value, role.value);
-            setRoles(updated);
-            firstName.reset();
-            lastName.reset();
-            role.reset();
-        } catch (error) {
-            if (error instanceof Error) {
-                role.setMessage(error.message);
-            }
-        }
+        RoleService.createRole(firstName.value, lastName.value, role.value)
+            .then((updated) => {
+                setRoles(updated);
+                firstName.reset();
+                lastName.reset();
+                role.reset();
+            })
+            .catch((error) => {
+                if (error instanceof Error) {
+                    role.setMessage(error.message);
+                }
+            });
     };
 
     return { firstName, lastName, role, roles, handleSubmit };

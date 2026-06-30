@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Department } from "../data/types";
 import { useFormInput } from "./useFormInput";
 import * as EmployeeService from "../services/employeeService";
@@ -10,10 +10,16 @@ export function useEmployeeForm(): {
     departments: Department[];
     handleSubmit: (e: React.SubmitEvent) => void;
 } {
-    const [departments, setDepartments] = useState<Department[]>(EmployeeService.getDepartments());
+    const [departments, setDepartments] = useState<Department[]>([]);
     const firstName = useFormInput("");
     const lastName = useFormInput("");
     const department = useFormInput("");
+
+    useEffect(() => {
+        EmployeeService.getDepartments()
+            .then(setDepartments)
+            .catch((error) => console.error(error));
+    }, []);
 
     const handleSubmit = (e: React.SubmitEvent) => {
         e.preventDefault();
@@ -28,17 +34,18 @@ export function useEmployeeForm(): {
 
         if (!firstNameValid || !deptValid) return;
 
-        try {
-            const updated = EmployeeService.createEmployee(firstName.value, lastName.value, department.value);
-            setDepartments(updated);
-            firstName.reset();
-            lastName.reset();
-            department.reset();
-        } catch (error) {
-            if (error instanceof Error) {
-                department.setMessage(error.message);
-            }
-        }
+        EmployeeService.createEmployee(firstName.value, lastName.value, department.value)
+            .then((updated) => {
+                setDepartments(updated);
+                firstName.reset();
+                lastName.reset();
+                department.reset();
+            })
+            .catch((error) => {
+                if (error instanceof Error) {
+                    department.setMessage(error.message);
+                }
+            });
     };
 
     return { firstName, lastName, department, departments, handleSubmit };
