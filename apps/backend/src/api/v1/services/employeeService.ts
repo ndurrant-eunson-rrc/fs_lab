@@ -1,6 +1,6 @@
-import { Department, Employee } from "../types";
-import departments from "../data/department-data";
-
+import * as EmployeeRepo from "../repositories/employeeRepo";
+import { Department } from "../types";
+ 
 export function validateFirstName(firstName: string): string {
     if (firstName.trim().length < 3) {
         return "First name must be at least 3 characters.";
@@ -8,25 +8,19 @@ export function validateFirstName(firstName: string): string {
     return "";
 }
  
-export function getDepartments(): Department[] {
-    return [...departments];
+export async function getDepartments(): Promise<Department[]> {
+    return EmployeeRepo.getDepartments();
 }
  
-export function createEmployee(firstName: string, lastName: string | undefined, deptName: string): Department[] {
+export async function createEmployee(firstName: string, lastName: string | undefined, deptName: string): Promise<Department[]> {
     const firstNameError = validateFirstName(firstName);
     if (firstNameError) throw new Error(firstNameError);
  
-    const foundDeptIndex = departments.findIndex((dept) => dept.name === deptName);
-    if (foundDeptIndex === -1) {
+    const departments = await EmployeeRepo.getDepartments();
+    const deptExists = departments.some((dept) => dept.name === deptName);
+    if (!deptExists) {
         throw new Error("Please select a valid department.");
     }
  
-    const newEmployee: Employee = { firstName: firstName.trim(), lastName: lastName?.trim() || undefined };
- 
-    departments[foundDeptIndex] = {
-        ...departments[foundDeptIndex],
-        employees: [...departments[foundDeptIndex].employees, newEmployee],
-    };
- 
-    return [...departments];
+    return EmployeeRepo.createEmployee(firstName.trim(), lastName?.trim() || undefined, deptName);
 }
