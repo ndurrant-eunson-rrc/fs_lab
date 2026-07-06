@@ -1,18 +1,22 @@
 import type { Role } from "../data/types";
-import orgData from "../data/organization-data";
 
-const roles: Role[] = [...orgData];
-
-export function getRoles(): Role[] {
-    return [...roles];
+const BASE_URL = "http://localhost:3000/api/v1/roles";
+ 
+export async function getRoles(): Promise<Role[]> {
+    const response = await fetch(BASE_URL);
+    if (!response.ok) throw new Error("Failed to fetch roles.");
+    return response.json();
 }
-
-export function createRole(firstName: string, lastName: string, role: string): Role[] {
-    const foundRole = roles.find((r) => r.role === role);
-    if (foundRole) {
-        throw new Error(`The role "${role}" is already occupied.`);
+ 
+export async function createRole(firstName: string, lastName: string, role: string): Promise<Role[]> {
+    const response = await fetch(BASE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ firstName, lastName, role }),
+    });
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
     }
-
-    roles.push({ firstName, lastName, role });
-    return [...roles];
+    return response.json();
 }

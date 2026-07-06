@@ -1,19 +1,22 @@
-import * as EmployeeRepo from "../apis/employeeRepo";
 import type { Department } from "../data/types";
+import * as EmployeeRepo from "../apis/employeeRepo";
 
-export function getDepartments(): Department[] {
+export function validateFirstName(firstName: string): string {
+    if (firstName.trim().length < 3) {
+        return "First name must be at least 3 characters.";
+    }
+    return "";
+}
+
+export async function getDepartments(): Promise<Department[]> {
     return EmployeeRepo.getDepartments();
 }
 
-export function createEmployee(firstName: string, lastName: string | undefined, deptName: string): Department[] {
-    if (firstName.trim().length < 3) {
-        throw new Error("First name must be at least 3 characters.");
-    }
+export async function createEmployee(firstName: string, lastName: string | undefined, deptName: string): Promise<Department[]> {
+    const firstNameError = validateFirstName(firstName);
+    if (firstNameError) throw new Error(firstNameError);
 
-    const deptExists = EmployeeRepo.getDepartments().some((dept) => dept.name === deptName);
-    if (!deptExists) {
-        throw new Error("Please select a valid department.");
-    }
+    if (!deptName) throw new Error("Please select a valid department.");
 
     return EmployeeRepo.createEmployee(firstName.trim(), lastName?.trim() || undefined, deptName);
 }
