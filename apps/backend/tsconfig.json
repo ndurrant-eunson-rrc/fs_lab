@@ -4,7 +4,8 @@
       "module": "commonjs",
       "outDir": "./dist",
       "sourceMap": true,
-      "lib": ["ESNext"]
+      "lib": ["ESNext"],
+      "types": ["node"]
     },
     "include": ["src/**/*", "config/**/*"],
     "exclude": ["node_modules", "dist"]
