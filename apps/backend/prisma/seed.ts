@@ -1,12 +1,12 @@
 import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
-
+ 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter });
-
+ 
 async function main() {
-
+ 
     const departmentData = [
         {
             name: "Administration",
@@ -100,7 +100,7 @@ async function main() {
             ],
         },
     ];
-
+ 
     for (const dept of departmentData) {
         await prisma.department.create({
             data: {
@@ -151,24 +151,40 @@ async function main() {
         { firstName: "Aleksandr", lastName: "Milosevic", role: "Manager of IT Risk Management" },
         { firstName: "Jim", lastName: "Wingnut", role: "Manager IT, project management office" },
     ];
-
+ 
     for (const entry of organizationData) {
+        let employee = await prisma.employee.findFirst({
+            where: {
+                firstName: entry.firstName,
+                lastName: entry.lastName,
+            },
+        });
+ 
+        if (!employee) {
+            const defaultDept = await prisma.department.findUnique({
+                where: { name: "Administration" },
+            });
+ 
+            employee = await prisma.employee.create({
+                data: {
+                    firstName: entry.firstName,
+                    lastName: entry.lastName,
+                    departmentId: defaultDept!.id,
+                },
+            });
+        }
+
         await prisma.role.create({
             data: {
                 title: entry.role,
-                person: {
-                    create: {
-                        firstName: entry.firstName,
-                        lastName: entry.lastName,
-                    },
-                },
+                employeeId: employee.id,
             },
         });
     }
-
+ 
     console.log("Database seeded successfully.");
 }
-
+ 
 main()
     .catch((e) => {
         console.error(e);

@@ -4,15 +4,15 @@ import { Role } from "../types";
 export async function getRoles(): Promise<Role[]> {
     const roles = await prisma.role.findMany({
         include: {
-            person: true,
+            employee: true,
         },
     });
 
     return roles
-        .filter((r) => r.person !== null)
+        .filter((r) => r.employee !== null)
         .map((r) => ({
-            firstName: r.person!.firstName,
-            lastName: r.person!.lastName,
+            firstName: r.employee!.firstName,
+            lastName: r.employee!.lastName ?? "",
             role: r.title,
         }));
 }
@@ -26,15 +26,25 @@ export async function createRole(firstName: string, lastName: string, role: stri
         throw new Error(`The role "${role}" is already occupied.`);
     }
 
+    let employee = await prisma.employee.findFirst({
+        where: { firstName, lastName },
+    });
+
+    if (!employee) {
+        const defaultDept = await prisma.department.findFirst();
+        employee = await prisma.employee.create({
+            data: {
+                firstName,
+                lastName,
+                departmentId: defaultDept!.id,
+            },
+        });
+    }
+
     await prisma.role.create({
         data: {
             title: role,
-            person: {
-                create: {
-                    firstName,
-                    lastName,
-                },
-            },
+            employeeId: employee.id,
         },
     });
 
