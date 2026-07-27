@@ -108,3 +108,23 @@ td {
 tr:last-child td {
   border-bottom: none;
 }
+
+.header-auth {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.header-auth button {
+    background-color: #fff;
+    color: #2B3990;
+    border: none;
+    padding: 6px 14px;
+    font-size: 0.95rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.header-auth button:hover {
+    background-color: #e8e8e8;
+}

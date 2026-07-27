@@ -1,0 +1,30 @@
+.login-prompt {
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    margin-bottom: 30px;
+    text-align: center;
+}
+ 
+.login-prompt p {
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+ 
+.login-prompt button {
+    background-color: #2B3990;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    border-radius: 4px;
+    cursor: pointer;
+    width: auto;
+}
+ 
+.login-prompt button:hover {
+    background-color: #1C75BC;
+}
