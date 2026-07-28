@@ -4,7 +4,7 @@ export function validateCreateEmployee(req: Request, res: Response, next: NextFu
     const { firstName, deptName } = req.body;
  
     if (!firstName || !deptName) {
-        res.status(400).json({ message: "firstName and deptName are required." });
+        res.status(400).json({ message: "First Name and Department Name are required." });
         return;
     }
  
@@ -15,7 +15,7 @@ export function validateCreateRole(req: Request, res: Response, next: NextFuncti
     const { firstName, role } = req.body;
  
     if (!firstName || !role) {
-        res.status(400).json({ message: "firstName and role are required." });
+        res.status(400).json({ message: "First Name and Role are required." });
         return;
     }
  
