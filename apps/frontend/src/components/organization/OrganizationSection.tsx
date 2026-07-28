@@ -1,8 +1,12 @@
 import { useRoleForm } from "../../hooks/useRoleForm";
+import { SignedIn, SignedOut } from "@clerk/clerk-react";
+import type { Role } from "../../data/types";
 import RoleForm from "../forms/RoleForm";
+import LoginPrompt from "../layout/Login";
 
 export default function Organization() {
 	const roleForm = useRoleForm();
+	const roles = (roleForm.data ?? []) as Role[];
 
 	return (
 		<>
@@ -15,8 +19,8 @@ export default function Organization() {
 		</tr>
 		</thead>
 		<tbody>
-            {
-		roleForm.roles.map((person, index) => (
+                        {
+		roles.map((person, index) => (
 			<tr key= { index } >
 			<td>{ person.firstName } { person.lastName } </td>
 			< td > { person.role } </td>
@@ -26,7 +30,12 @@ export default function Organization() {
 	</tbody>
 		</table>
 		</main>
-		< RoleForm roleForm = { roleForm } />
+		< SignedIn >
+		<RoleForm roleForm={ roleForm } />
+			</SignedIn>
+			< SignedOut >
+			<LoginPrompt />
+			</SignedOut>
 			</>
-  );
+    );
 }

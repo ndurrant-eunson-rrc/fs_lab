@@ -2,22 +2,24 @@ import { useEffect, useState } from "react";
 import type { Role } from "../data/types";
 import { useFormInput } from "./useFormInput";
 import * as RoleService from "../services/roleService";
+import { useAuth } from "@clerk/clerk-react";
 
 export function useRoleForm(): {
     firstName: ReturnType<typeof useFormInput>;
     lastName: ReturnType<typeof useFormInput>;
     role: ReturnType<typeof useFormInput>;
-    roles: Role[];
+    data: Role[];
     handleSubmit: (e: React.SubmitEvent) => void;
 } {
-    const [roles, setRoles] = useState<Role[]>([]);
+    const { getToken } = useAuth();
+    const [data, setData] = useState<Role[]>([]);
     const firstName = useFormInput("");
     const lastName = useFormInput("");
     const role = useFormInput("");
 
     useEffect(() => {
         RoleService.getRoles()
-            .then(setRoles)
+            .then(setData)
             .catch((error) => console.error(error));
     }, []);
 
@@ -34,9 +36,12 @@ export function useRoleForm(): {
 
         if (!firstNameValid || !roleValid) return;
 
-        RoleService.createRole(firstName.value, lastName.value, role.value)
+        getToken().then((token) => {
+            if (!token) throw new Error("Not authenticated.");
+            return RoleService.createRole(firstName.value, lastName.value, role.value, token);
+        })
             .then((updated) => {
-                setRoles(updated);
+                setData(updated);
                 firstName.reset();
                 lastName.reset();
                 role.reset();
@@ -48,5 +53,5 @@ export function useRoleForm(): {
             });
     };
 
-    return { firstName, lastName, role, roles, handleSubmit };
+    return { firstName, lastName, role, data, handleSubmit };
 }

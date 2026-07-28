@@ -1,6 +1,6 @@
 import type { Role } from "../data/types";
 
-const BASE_URL = "http://localhost:3000/api/v1/roles";
+const BASE_URL = `${import.meta.env.VITE_API_URL}/api/v1/roles`;
  
 export async function getRoles(): Promise<Role[]> {
     const response = await fetch(BASE_URL);
@@ -8,10 +8,13 @@ export async function getRoles(): Promise<Role[]> {
     return response.json();
 }
  
-export async function createRole(firstName: string, lastName: string, role: string): Promise<Role[]> {
+export async function createRole(firstName: string, lastName: string, role: string, token: string): Promise<Role[]> {
     const response = await fetch(BASE_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+        },
         body: JSON.stringify({ firstName, lastName, role }),
     });
     if (!response.ok) {

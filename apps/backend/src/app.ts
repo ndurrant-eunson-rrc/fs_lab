@@ -4,12 +4,15 @@ import corsOptions from "../config/cors";
 import express, { Express } from "express";
 import employeeRoutes from "./api/v1/routes/employeeRoutes";
 import roleRoutes from "./api/v1/routes/roleRoutes";
+import { clerkMiddleware } from "@clerk/express";
 
 const app: Express = express();
 
 app.use(cors(corsOptions));
 
 app.use(express.json());
+
+app.use(clerkMiddleware());
  
 // Routes
 app.use("/api/v1/employees", employeeRoutes);

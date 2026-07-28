@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "@clerk/clerk-react";
 import type { Department } from "../data/types";
 import { useFormInput } from "./useFormInput";
 import * as EmployeeService from "../services/employeeService";
@@ -10,6 +11,7 @@ export function useEmployeeForm(): {
     departments: Department[];
     handleSubmit: (e: React.SubmitEvent) => void;
 } {
+    const { getToken } = useAuth();
     const [departments, setDepartments] = useState<Department[]>([]);
     const firstName = useFormInput("");
     const lastName = useFormInput("");
@@ -34,7 +36,11 @@ export function useEmployeeForm(): {
 
         if (!firstNameValid || !deptValid) return;
 
-        EmployeeService.createEmployee(firstName.value, lastName.value, department.value)
+        getToken()
+            .then((token) => {
+                if (!token) throw new Error("Not authenticated.");
+                return EmployeeService.createEmployee(firstName.value, lastName.value, department.value, token);
+            })
             .then((updated) => {
                 setDepartments(updated);
                 firstName.reset();

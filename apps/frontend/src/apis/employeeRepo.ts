@@ -1,6 +1,6 @@
 import type { Department } from "../data/types";
 
-const BASE_URL = "http://localhost:3000/api/v1/employees";
+const BASE_URL = `${import.meta.env.VITE_API_URL}/api/v1/employees`;
  
 export async function getDepartments(): Promise<Department[]> {
     const response = await fetch(BASE_URL);
@@ -8,10 +8,13 @@ export async function getDepartments(): Promise<Department[]> {
     return response.json();
 }
  
-export async function createEmployee(firstName: string, lastName: string | undefined, deptName: string): Promise<Department[]> {
+export async function createEmployee(firstName: string, lastName: string | undefined, deptName: string, token: string): Promise<Department[]> {
     const response = await fetch(BASE_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+        },
         body: JSON.stringify({ firstName, lastName, deptName }),
     });
     if (!response.ok) {
