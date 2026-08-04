@@ -1,12 +1,11 @@
 import { useRoleForm } from "../../hooks/useRoleForm";
 import { SignedIn, SignedOut } from "@clerk/clerk-react";
-import type { Role } from "../../data/types";
 import RoleForm from "../forms/RoleForm";
 import LoginPrompt from "../layout/Login";
 
 export default function Organization() {
 	const roleForm = useRoleForm();
-	const roles = (roleForm.data ?? []) as Role[];
+	const roles = roleForm.roles;
 
 	return (
 		<>
